@@ -58,6 +58,12 @@ const micropubFn = async event => {
 		return Response.error(Error.SCOPE)
 	}
 
+	// Remove access_token, client_id, and action from body
+	let reserved = ['access_token', 'client_id', 'action']
+	reserved.forEach(key => {
+		delete body[key]
+	})
+
 	let res
 	if (action == 'create') {
 		res = await publish.addContent(body, headers['content-type'].indexOf('application/json') >= 0, client_id)
