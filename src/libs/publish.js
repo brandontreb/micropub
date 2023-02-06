@@ -94,11 +94,12 @@ const publish = {
 				let imageContent = ''
 				for (let img of uploaded) {
 					if (img.value) {
-						// imageContent += `![${img.alt || ''}](/${img.value})\n\n`
+						imageContent += `![${img.alt || ''}](${img.value})\n\n`
 						parsed.media.push({ 'value': img.value, 'alt': img.alt })
 					}
 				}								
-				// parsed.content = `${imageContent}${parsed.content}`
+				// Add image content to the end of the post
+				parsed.content = `${parsed.content}${imageContent}`
 			}
 		}
 		if (!utils.objectHasKeys(parsed)) {

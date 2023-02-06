@@ -26,7 +26,9 @@ const getHandler = async query => {
 		} else if (exists.files) {
 			let items = []
 			for (let file of exists.files) {
-				items.push({ 'url': `${process.env.ME}${file.path}` })
+				// Strip out /static/ from the path
+				let path = file.path.replace(/^\/static\//, '');
+				items.push({ 'url': `${process.env.ME}${path}` })
 			}
 			// Since `url` should start with timestamp, sort by `url` and first item should be the newest
 			items.sort((a, b) => a.url < b.url ? 1 : a.url > b.url ? -1 : 0)
