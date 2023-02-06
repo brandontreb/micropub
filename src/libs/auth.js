@@ -23,19 +23,13 @@ const Auth = {
 		// Checks if at least one of the values in `requiredScopes` is in `validScopes`
 		return requiredScopes.split(' ').some(sc => validScopes.includes(sc))
 	},
-	getToken: (headers, body) => {
-		if (headers && headers.authorization && headers.authorization.split(' ')[1] && body && body['access_token']) {
-			return Error.INVALID
-		}
+	getToken: (headers, body) => {		
 		const token = (headers && headers.authorization && headers.authorization.split(' ')[1]) || (body && body['access_token'])
 		return token || Error.UNAUTHORIZED
 	},
 	isAuthorized: async (headers, body) => {
 		console.log('HEADERS:', headers)
-		console.log('BODY:', JSON.stringify(body))
-		if (headers.authorization && headers.authorization.split(' ')[1] && body['access_token']) {
-			return Error.INVALID
-		}
+		console.log('BODY:', JSON.stringify(body))		
 		const token = Auth.getToken(headers, body)
 		if (!token || token.error) {
 			return token || Error.UNAUTHORIZED
