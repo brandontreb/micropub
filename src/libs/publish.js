@@ -87,6 +87,7 @@ const publish = {
 		}
 		if (parsed && parsed.photo) {
 			const uploaded = await uploadFiles(parsed.photo)
+			console.log('└─>', uploaded)
 			if (uploaded && uploaded.length) {
 				let imageContent = ''
 				for (let img of uploaded) {
