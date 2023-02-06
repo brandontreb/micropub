@@ -40,6 +40,11 @@ const micropubFn = async event => {
 		return Response.error(Error.NOT_ALLOWED)
 	}
 
+	// GET requests are not authenticated
+	if (event.httpMethod === 'GET') {
+		return getHandler(event.queryStringParameters)
+	}
+
 	const { headers, body } = event
 	const authResponse = await auth.isAuthorized(headers, body)
 	console.log('authResponse', authResponse)
@@ -48,10 +53,6 @@ const micropubFn = async event => {
 	}
 	// eslint-disable-next-line camelcase
 	const { client_id, scope } = authResponse
-
-	if (event.httpMethod === 'GET') {
-		return getHandler(event.queryStringParameters)
-	}
 
 	const action = (body.action || 'create').toLowerCase()
 	if (!scope || !auth.isValidScope(scope, action)) {
