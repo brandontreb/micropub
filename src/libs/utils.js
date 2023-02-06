@@ -52,6 +52,13 @@ const utils = {
 			console.error(err)
 			console.error('Invalid URL:', urlString)
 		}
+	},
+
+	wrapArray: data => {
+		if (!Array.isArray(data)) {
+			return [data]
+		}
+		return data
 	}
 }
 

@@ -86,7 +86,8 @@ const publish = {
 			parsed.name = parsed.name || await parse.getPageTitle(parsed['like-of'])
 		}
 		if (parsed && parsed.photo) {
-			const uploaded = await uploadFiles(parsed.photo)
+			let photos = utils.wrapArray(parsed.photo)
+			let uploaded = await uploadFiles(photos)			
 			console.log('└─>', uploaded)
 			if (uploaded && uploaded.length) {
 				let imageContent = ''
