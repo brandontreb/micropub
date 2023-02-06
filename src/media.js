@@ -33,6 +33,7 @@ const getHandler = async query => {
 			// Since `url` should start with timestamp, sort by `url` and first item should be the newest
 			items.sort((a, b) => a.url < b.url ? 1 : a.url > b.url ? -1 : 0)
 			items = items.slice(opts.offset, opts.offset + opts.limit)
+			console.log(items);
 
 			return Response.send(200, {
 				'items': items,
