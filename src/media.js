@@ -70,6 +70,9 @@ const mediaFn = async event => {
 		const filename = content.mediaFilename(file)
 		const uploaded = await GitHub.uploadImage(filename, file)
 		if (uploaded) {
+			// Strip out /static/ from the path before sending back
+			// TODO: This should only be done for Hugo sites
+			uploaded = uploaded.replace(/^\/static\//, '');
 			return Response.sendLocation(`${process.env.ME}${uploaded}`, true)
 		}
 	}
