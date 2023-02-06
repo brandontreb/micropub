@@ -27,13 +27,13 @@ const getHandler = async query => {
 			let items = []
 			for (let file of exists.files) {
 				// Strip out /static/ from the path
-				let path = file.path.replace(/^\/static\//, '');
+				let path = file.path.replace("/static", '')				
 				items.push({ 'url': `${process.env.ME}${path}` })
 			}
 			// Since `url` should start with timestamp, sort by `url` and first item should be the newest
 			items.sort((a, b) => a.url < b.url ? 1 : a.url > b.url ? -1 : 0)
 			items = items.slice(opts.offset, opts.offset + opts.limit)
-			console.log(items);
+			console.log('items', items);			
 
 			return Response.send(200, {
 				'items': items,
