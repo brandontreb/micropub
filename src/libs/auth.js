@@ -35,7 +35,13 @@ const Auth = {
 			return token || Error.UNAUTHORIZED
 		}
 		const auth = await Auth.validateToken(process.env.TOKEN_ENDPOINT, token)
-		if (!auth || auth.me != process.env.ME) {
+
+		// Strip trailing slash from auth.me if it exists
+		let authMe = auth.me.replace(/\/$/, '');
+		// Strip trailing slash from process.env.ME if it exists
+		let me = process.env.ME.replace(/\/$/, '');
+		
+		if (!auth || authMe !== me) {
 			return Error.FORBIDDEN
 		}
 		return auth
