@@ -86,6 +86,7 @@ const publish = {
 			parsed.name = parsed.name || await parse.getPageTitle(parsed['like-of'])
 		}
 		if (parsed && parsed.photo) {
+			parsed.data.media = [];
 			let photos = utils.wrapArray(parsed.photo)
 			let uploaded = await uploadFiles(photos)			
 			console.log('└─>', uploaded)
@@ -93,10 +94,11 @@ const publish = {
 				let imageContent = ''
 				for (let img of uploaded) {
 					if (img.value) {
-						imageContent += `![${img.alt || ''}](/${img.value})\n\n`
+						// imageContent += `![${img.alt || ''}](/${img.value})\n\n`
+						parsed.data.media.push({ 'value': img.value, 'alt': img.alt })
 					}
-				}
-				parsed.content = `${imageContent}${parsed.content}`
+				}								
+				// parsed.content = `${imageContent}${parsed.content}`
 			}
 		}
 		if (!utils.objectHasKeys(parsed)) {
