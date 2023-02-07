@@ -62,7 +62,10 @@ const content = {
 		}
 		const slug = slugParts.join('-')
 		const dir = (process.env.CONTENT_DIR || 'src').replace(/\/$/, '')
-		const filename = `${dir}/${type}/${slug}.md`
+
+		// Add type to the front matter
+		data.type = type
+		const filename = `${dir}/post/${slug}.md`
 
 		return {
 			'filename': filename,
@@ -77,16 +80,16 @@ const content = {
 			return null
 		}
 		if (data['like-of']) {
-			return 'likes'
+			return 'like'
 		}
 		if (data['bookmark-of']) {
-			return 'bookmarks'
+			return 'bookmark'
 		}
 		if (data['rsvp'] && data['in-reply-to']) {
 			return 'rsvp'
 		}
 		if (data['name']) {
-			return 'articles'
+			return 'article'
 		}
 		if (data['watch-of']) {
 			return 'watched'
@@ -94,7 +97,7 @@ const content = {
 		if (data['read-of']) {
 			return 'read'
 		}
-		return 'notes'
+		return 'note'
 	},
 
 	mediaFilename: file => {
